@@ -1,0 +1,1320 @@
+# TRUSTTECH — COMPLETE MARKETPLACE DEVELOPMENT PROMPT
+
+## PROJECT OVERVIEW
+
+Build a complete, professional, production-oriented technology marketplace called **TrustTech**.
+
+TrustTech connects businesses, startups, individuals, and organizations with qualified technology professionals who can deliver websites, software, design, and other digital services.
+
+The platform should combine the best practical features of professional freelancing marketplaces with a simpler, more trustworthy experience.
+
+This is an existing project being renamed and expanded. Do not treat it as an entirely unrelated project.
+
+Your responsibility is to inspect the existing codebase, understand its current functionality, preserve working features, and improve it into a complete application.
+
+Do not merely generate a landing page or static demonstration.
+
+The goal is to build a functional marketplace with authentication, dashboards, developer verification, project management, applications, payments architecture, and administrative controls.
+
+---
+
+# 1. BRAND IDENTITY
+
+Official name: TrustTech
+
+Tagline:
+
+**Trusted People. Better Technology.**
+
+Brand purpose:
+
+To make it easier for businesses to find reliable technology professionals and for talented professionals to find legitimate opportunities.
+
+Target markets:
+
+- Nigeria initially.
+- Other African countries during expansion.
+- International clients and developers in later stages.
+
+The brand should feel professional, trustworthy, modern, accessible, and internationally competitive.
+
+Avoid childish designs, excessive animations, unnecessary gradients, and generic AI-generated branding.
+
+---
+
+# 2. IMPORTANT DESIGN REQUIREMENTS
+
+The website must look like it was designed and developed by a skilled human product designer and experienced frontend developer.
+
+I do NOT want a generic AI-generated website.
+
+Avoid the common AI-generated design style characterized by:
+
+- Excessive purple and blue gradients.
+- Random floating glass cards.
+- Too many glowing elements.
+- Oversized headings with meaningless marketing text.
+- Excessive rounded cards.
+- Repetitive section layouts.
+- Unnecessary animated backgrounds.
+- Fake statistics and fake testimonials.
+- Generic startup illustrations.
+- Excessive empty space.
+- Repeated feature cards that all look identical.
+
+Instead, create a realistic, polished, human-designed SaaS marketplace.
+
+Design principles:
+
+- Strong visual hierarchy.
+- Consistent spacing.
+- Professional typography.
+- Natural, readable layouts.
+- Carefully selected colors.
+- Clean navigation.
+- Clear buttons and interaction states.
+- Realistic dashboard layouts.
+- Responsive design.
+- Subtle animations only when useful.
+- Professional empty states.
+- Clear error and success messages.
+
+Use a consistent design system throughout the application.
+
+Suggested typography:
+
+- DM Sans.
+- Inter.
+- Space Grotesk for selected headings.
+
+Use a dark professional theme with carefully controlled accent colors.
+
+Suggested colors:
+
+- Background: deep charcoal or dark navy.
+- Main surfaces: slightly lighter charcoal.
+- Primary accent: teal, cyan, or restrained blue.
+- Text: white and neutral gray.
+- Success: green.
+- Warning: amber.
+- Error: red.
+
+Do not force every page to have the same layout. Dashboards should look different from marketing pages while maintaining consistent branding.
+
+Create a responsive interface for:
+
+- Desktop.
+- Laptop.
+- Tablet.
+- Mobile phones.
+
+The mobile experience must be fully usable, not merely a compressed desktop layout.
+
+---
+
+# 3. PROJECT DEVELOPMENT APPROACH
+
+Before writing code:
+
+1. Inspect all existing files.
+2. Identify the current pages and features.
+3. Inspect Firebase configuration.
+4. Identify existing authentication logic.
+5. Identify existing Firestore collections.
+6. Identify broken or incomplete functionality.
+7. Preserve features that already work.
+8. Create a development plan.
+9. Implement the improvements systematically.
+
+Do not unnecessarily replace working code.
+
+Do not change Firebase collection names or field names without checking existing dependencies.
+
+Do not create duplicate authentication systems.
+
+Do not introduce fake functionality.
+
+If a feature requires an external service, clearly identify the integration needed instead of pretending it works.
+
+---
+
+# 4. TECHNOLOGY STACK
+
+Use the existing project structure whenever possible.
+
+Preferred technologies:
+
+- HTML5.
+- CSS3.
+- JavaScript ES modules.
+- Firebase Authentication.
+- Cloud Firestore.
+- Firebase Hosting.
+- Firebase Storage where necessary.
+- Firebase App Check where supported.
+- Firebase Cloud Functions for trusted backend operations.
+- A payment provider suitable for Nigerian and international transactions, subject to eligibility and compliance.
+
+Existing Firebase project:
+
+`developer-ai-8dd19`
+
+Current Firebase SDK version:
+
+`13.0.0`
+
+Preserve the existing Firebase project unless there is a strong technical reason to migrate.
+
+Use the existing Firebase configuration file:
+
+`firebase-config.js`
+
+Do not expose secret API keys, payment secrets, admin credentials, or privileged service-account information in frontend code.
+
+Firebase client configuration may remain in the frontend as appropriate, but Firestore security rules must protect the database.
+
+Never rely solely on frontend checks for authorization.
+
+---
+
+# 5. ACCOUNT SYSTEM
+
+Build one unified TrustTech account system.
+
+Users should not need separate accounts to hire developers and offer services.
+
+The same account should support different marketplace activities.
+
+Account types:
+
+- Business / Client.
+- Developer / Freelancer.
+- Administrator.
+
+A user may eventually be able to switch between hiring and freelancing modes without creating another account.
+
+Use Firebase Authentication.
+
+Required functionality:
+
+- Signup.
+- Login.
+- Logout.
+- Password reset.
+- Authentication state persistence.
+- Protected pages.
+- Account profile.
+- Account type selection.
+- User-friendly error handling.
+- Email verification support when properly configured.
+
+Do not falsely claim that an email has been verified if Firebase verification has not actually occurred.
+
+Use secure password handling through Firebase Authentication.
+
+Never store plaintext passwords in Firestore.
+
+---
+
+# 6. EXISTING FIREBASE DATABASE STRUCTURE
+
+Preserve the existing database structure where possible.
+
+Existing collections include:
+
+## users
+
+Document ID:
+
+Firebase Authentication UID.
+
+Fields:
+
+- fullName
+- email
+- accountType
+- phone
+- whatsapp
+- createdAt
+
+The WhatsApp field is optional.
+
+Do not rename `phone` to `phoneNumber` or `whatsapp` to `whatsappNumber` without updating all related code and security rules.
+
+## developerApplications
+
+Document ID:
+
+Firebase Authentication UID.
+
+Existing fields:
+
+- uid
+- email
+- professionalTitle
+- experience
+- bio
+- skills
+- portfolio
+- github
+- projectLinks
+- projectDescription
+- status
+- createdAt
+
+Application status:
+
+- Pending Review
+- Approved
+- Rejected
+
+The status must be controlled securely by administrators.
+
+The existing developer verification page must remain functional.
+
+## projects
+
+Store business project listings.
+
+## projectApplications
+
+Store applications developers submit to projects.
+
+Existing application documents may use a composite ID based on project ID and developer UID.
+
+Inspect the existing implementation before changing this structure.
+
+Use consistent field names across all pages.
+
+---
+
+# 7. PHASE 1 — INITIAL MARKETPLACE LAUNCH
+
+Phase 1 should focus on a curated marketplace of digital professionals.
+
+Initial professional categories:
+
+## A. Website and No-Code Developers
+
+Services include:
+
+- Business websites.
+- Landing pages.
+- Portfolio websites.
+- E-commerce websites.
+- Website redesign.
+- Website maintenance.
+- WordPress development.
+- Webflow development.
+- Framer development.
+- Shopify development.
+- Website integrations.
+- Website performance optimization.
+
+## B. UI/UX Designers
+
+Services include:
+
+- Website UI design.
+- Mobile application UI design.
+- UX research.
+- Wireframes.
+- Prototypes.
+- Figma designs.
+- Design systems.
+- Website redesign.
+- Usability improvements.
+
+## C. Technical Copywriters
+
+Services include:
+
+- Website copywriting.
+- SaaS product descriptions.
+- Technical documentation.
+- Landing-page copy.
+- Product descriptions.
+- Developer documentation.
+- Software-related content.
+
+These categories form the initial marketplace.
+
+Do not make the initial platform unnecessarily complicated.
+
+The goal is to establish trust, attract qualified developers, and validate demand.
+
+---
+
+# 8. PHASE 2 — MARKETPLACE EXPANSION
+
+Phase 2 expands TrustTech into a broader technology and professional-services marketplace.
+
+Additional categories:
+
+## A. Full-Stack Developers
+
+- Frontend development.
+- Backend development.
+- Full-stack applications.
+- API development.
+- Database design.
+- Software integrations.
+- SaaS applications.
+
+## B. Cybersecurity Professionals
+
+- Security consulting.
+- Authorized security assessments.
+- Security reviews.
+- Vulnerability management.
+- Security documentation.
+- Defensive security.
+- Compliance support.
+
+All cybersecurity services must be legitimate and authorized.
+
+Do not create a marketplace for illegal hacking, unauthorized access, malware, or cybercrime.
+
+## C. Data Science and AI
+
+- Data analysis.
+- Machine learning.
+- Data visualization.
+- AI application development.
+- Automation.
+- Data engineering.
+- Business intelligence.
+
+## D. Finance and Business Technology
+
+- Financial analysis.
+- Business analytics.
+- Financial modeling.
+- Accounting technology support.
+- Business automation.
+- Financial reporting assistance.
+
+Financial services must be appropriately restricted and compliant with relevant regulations.
+
+Phase 2 categories should be configurable by administrators.
+
+Do not force all Phase 2 categories into the initial launch if they are not ready.
+
+---
+
+# 9. HOMEPAGE
+
+Build a complete TrustTech homepage.
+
+Required sections:
+
+## Navigation
+
+- TrustTech logo.
+- Find Professionals.
+- Browse Projects.
+- How It Works.
+- Become a Developer.
+- Login.
+- Sign Up.
+
+When logged in, display the appropriate dashboard link.
+
+## Hero Section
+
+Main headline:
+
+**Find the right talent. Build something great.**
+
+Supporting text:
+
+TrustTech connects businesses with skilled technology professionals who can turn ideas into real products.
+
+Primary button:
+
+Find a Professional.
+
+Secondary button:
+
+Become a Developer.
+
+Use a realistic visual composition that does not resemble a generic AI landing page.
+
+## Marketplace Categories
+
+Display professional categories with appropriate descriptions.
+
+## How TrustTech Works
+
+For businesses:
+
+1. Create an account.
+2. Post a project or find a professional.
+3. Review developer applications.
+4. Hire a suitable professional.
+5. Manage the project.
+6. Review the completed work.
+
+For developers:
+
+1. Create an account.
+2. Complete developer verification.
+3. Build a professional profile.
+4. Browse suitable projects.
+5. Submit applications.
+6. Work with clients.
+7. Build a reputation.
+
+## Trust and Safety
+
+Explain:
+
+- Developer verification.
+- Project application process.
+- Secure account system.
+- Transparent fees.
+- Project communication.
+- Dispute resolution process.
+
+Do not make unverified claims about guaranteed security, guaranteed success, or guaranteed refunds.
+
+## Footer
+
+Include:
+
+- About TrustTech.
+- Contact.
+- Terms of Service.
+- Privacy Policy.
+- Developer Guidelines.
+- Payment and Refund Policy.
+- Copyright year automatically updated.
+
+---
+
+# 10. DEVELOPER REGISTRATION AND VERIFICATION
+
+This is a critical existing feature.
+
+Preserve the current developer verification page and improve it where necessary.
+
+Required fields:
+
+- Professional title.
+- Experience level.
+- Professional biography.
+- Skills.
+- Portfolio URL.
+- GitHub URL.
+- Additional project links.
+- Project description.
+- Accuracy agreement.
+
+Skills must be stored as an array.
+
+Required validation:
+
+- At least one skill.
+- Required fields completed.
+- Biography minimum length.
+- Valid URLs where applicable.
+- User confirms submitted information is accurate.
+
+Application statuses:
+
+- Pending Review.
+- Approved.
+- Rejected.
+
+The application document must use the authenticated user's UID.
+
+Do not allow developers to approve themselves.
+
+Do not allow developers to modify their application status.
+
+Do not allow developers to submit multiple duplicate applications.
+
+The current Firestore rules require:
+
+- `status` to be `Pending Review` on creation.
+- `createdAt` to use a server timestamp.
+- `email` to match the authenticated account.
+- Only the approved field names to be submitted.
+
+Preserve these requirements.
+
+If the existing application has already been submitted, display its current status instead of creating another application.
+
+The verification page must show a live application status.
+
+When an administrator approves an application, the status should update automatically.
+
+When approved, the developer should see a button leading to the developer dashboard.
+
+When rejected, display an appropriate message and support contact information.
+
+Email verification and identity verification must not be described as implemented unless they are genuinely connected to a working verification service.
+
+---
+
+# 11. DEVELOPER DASHBOARD
+
+Build a professional developer dashboard.
+
+Required features:
+
+## Dashboard Overview
+
+Display:
+
+- Developer name.
+- Profile completion.
+- Verification status.
+- Available projects.
+- Submitted applications.
+- Application statuses.
+- Recent activity.
+- Account settings.
+
+## Project Discovery
+
+Developers should be able to:
+
+- Browse available projects.
+- Search projects.
+- Filter by category.
+- Filter by budget range.
+- Filter by experience level.
+- Filter by project status.
+- View project details.
+- Apply to suitable projects.
+
+## Applications
+
+Display:
+
+- Project title.
+- Business name where appropriate.
+- Application date.
+- Application status.
+- Project budget.
+- Application details.
+
+Application statuses should include:
+
+- Submitted.
+- Under Review.
+- Shortlisted.
+- Accepted.
+- Rejected.
+- Withdrawn.
+
+Only authorized users should be able to modify application statuses.
+
+## Developer Profile
+
+Developers should be able to manage:
+
+- Professional title.
+- Biography.
+- Skills.
+- Portfolio.
+- GitHub.
+- Project links.
+- Experience.
+- Availability.
+
+Profile editing must respect existing Firestore security rules.
+
+Do not allow users to change protected verification fields.
+
+---
+
+# 12. BUSINESS / CLIENT DASHBOARD
+
+Build a separate dashboard for businesses and clients.
+
+Required features:
+
+## Dashboard Overview
+
+Display:
+
+- Business profile.
+- Projects posted.
+- Applications received.
+- Active projects.
+- Completed projects.
+- Recent activity.
+
+## Project Management
+
+Businesses should be able to:
+
+- Create projects.
+- Edit eligible projects.
+- Save drafts.
+- Publish projects.
+- Pause projects.
+- Close projects.
+- View applications.
+- Shortlist developers.
+- Accept applications.
+- Reject applications.
+
+Only the project owner or authorized administrator may manage a project.
+
+## Project Creation Form
+
+Fields:
+
+- Project title.
+- Project description.
+- Category.
+- Required skills.
+- Budget range.
+- Estimated duration.
+- Experience level.
+- Project type.
+- Optional attachments.
+
+Budget should support ranges rather than forcing fixed prices.
+
+Example:
+
+₦200,000–₦250,000.
+
+Do not use unrealistic or automatically generated project listings.
+
+Do not publish fake jobs.
+
+---
+
+# 13. MARKETPLACE SEARCH
+
+Build a working search system.
+
+Search should support:
+
+- Professional skills.
+- Developer titles.
+- Project titles.
+- Project categories.
+- Project descriptions.
+- Budget ranges.
+- Experience levels.
+
+Include filters and sorting.
+
+Use pagination or controlled loading rather than loading unlimited records.
+
+Show meaningful empty states.
+
+Do not display fake search results.
+
+---
+
+# 14. DEVELOPER PROPOSAL SYSTEM
+
+Developers should be able to submit applications to projects.
+
+Proposal fields:
+
+- Project ID.
+- Developer UID.
+- Proposal message.
+- Proposed price.
+- Estimated delivery time.
+- Relevant portfolio links.
+- Application status.
+- Submission timestamp.
+
+Prevent duplicate applications to the same project.
+
+Use a monthly proposal-credit system.
+
+Initial proposal allowance:
+
+**15 proposal credits per month.**
+
+The system should:
+
+- Track credits.
+- Display remaining credits.
+- Prevent submissions when credits are exhausted.
+- Reset credits according to a trusted backend schedule.
+- Prevent developers from manipulating their own credit balances.
+
+Do not rely on frontend-only credit restrictions.
+
+Use secure backend logic for credit deduction and reset.
+
+---
+
+# 15. AI PROPOSAL SCREENING
+
+Include an AI-assisted proposal screening feature.
+
+The AI may help businesses organize proposals by:
+
+- Relevant skills.
+- Portfolio relevance.
+- Experience.
+- Proposal completeness.
+- Project requirements.
+
+The AI must not automatically make final hiring decisions.
+
+Businesses must retain control over selection.
+
+AI screening should be transparent and should not falsely claim that a developer is verified or qualified.
+
+Use secure backend integration for AI APIs.
+
+Never expose AI API keys in frontend JavaScript.
+
+If an AI provider is not configured, display a clear setup message rather than a fake screening result.
+
+---
+
+# 16. DEVELOPER VERIFICATION AND PORTFOLIO TRUST
+
+Build a trust system that may include:
+
+- Verified email.
+- Approved developer profile.
+- Portfolio links.
+- GitHub links.
+- Completed project history.
+- Client feedback.
+- Relevant skill information.
+
+Verification badges must reflect actual verification.
+
+Do not display fake identity-verification badges.
+
+Portfolio links should be checked for valid formatting.
+
+Where feasible, support link verification or portfolio ownership verification.
+
+---
+
+# 17. PAYMENT AND PROJECT PROTECTION
+
+TrustTech should support a transparent project payment workflow.
+
+The business model should include:
+
+- Developer commission.
+- Small client transaction fee.
+- Project-based pricing.
+- Optional maintenance arrangements.
+
+The developer commission target is approximately **10%**, with the commission incorporated into the displayed developer price.
+
+The client should see transaction fees before confirming payment.
+
+Developers should be able to offer price ranges.
+
+Do not force all developers to use identical prices.
+
+## Payment Milestones
+
+Support milestone-based payments.
+
+Possible milestones:
+
+1. Initial project funding.
+2. Work-in-progress milestone.
+3. Final delivery.
+4. Client acceptance.
+
+The platform should support a configurable payment structure.
+
+Important:
+
+Do not hardcode inconsistent percentages.
+
+The previously discussed payment percentages need to be reconciled before implementation because they can exceed 100% when added together.
+
+Create a configurable milestone system where an administrator can define valid percentages or fixed amounts that total exactly 100%.
+
+## Escrow / Protected Payments
+
+The intended concept is a protected payment system, including a proposed seven-day website escrow/review period.
+
+However:
+
+Do not claim TrustTech has legally compliant escrow or actual protected payments unless a qualified payment provider and the required backend integration are implemented.
+
+Use a suitable payment provider and comply with applicable Nigerian and international regulations.
+
+Payment provider integration must be secure.
+
+Never store card details directly.
+
+Never expose payment secrets in frontend code.
+
+Payment status must be confirmed by trusted backend webhook verification, not by a frontend success message.
+
+The payment architecture should support:
+
+- Payment initiation.
+- Payment confirmation.
+- Milestone tracking.
+- Refund requests.
+- Dispute handling.
+- Transaction history.
+- Provider webhook verification.
+
+Clearly label any payment functionality that is still in development.
+
+---
+
+# 18. COMMUNICATION SYSTEM
+
+Build a project-related communication system.
+
+Businesses and developers should communicate about active projects.
+
+Requirements:
+
+- Project-specific conversations.
+- Message timestamps.
+- Readable message history.
+- Access control.
+- Clear conversation participants.
+- Secure message storage.
+
+Do not expose private contact details unnecessarily.
+
+The platform should discourage sharing contact information before the hiring process is complete.
+
+Do not claim that all external communication can be prevented.
+
+---
+
+# 19. ADMIN DASHBOARD
+
+Create a protected administrator dashboard.
+
+Admin features:
+
+## Developer Applications
+
+- View pending applications.
+- Review developer profiles.
+- Approve developers.
+- Reject developers.
+- View application history.
+
+## Project Management
+
+- View projects.
+- Remove inappropriate listings.
+- Suspend suspicious projects.
+- Manage categories.
+
+## Users
+
+- View users.
+- Suspend accounts where justified.
+- Review reported accounts.
+- Manage account restrictions.
+
+## Marketplace Management
+
+- Manage proposal credits.
+- Configure commissions.
+- Manage transaction fees.
+- Manage payment milestones.
+- Manage marketplace categories.
+
+## Reports
+
+Display useful platform statistics:
+
+- Total users.
+- Developers.
+- Businesses.
+- Active projects.
+- Applications.
+- Completed projects.
+
+Do not generate fake statistics.
+
+Admin privileges must be protected server-side.
+
+Do not make a user an administrator simply because they set `accountType: "admin"` in their browser or Firestore profile.
+
+Use a secure administrator authorization method.
+
+---
+
+# 20. DISPUTE RESOLUTION
+
+TrustTech should eventually support a dispute-resolution system.
+
+Disputes may involve:
+
+- Incomplete work.
+- Missed deadlines.
+- Payment disagreements.
+- Quality concerns.
+- Communication problems.
+
+Create a structured dispute workflow.
+
+Possible stages:
+
+- Dispute submitted.
+- Evidence collected.
+- Under review.
+- Resolution proposed.
+- Resolved.
+- Closed.
+
+Do not automatically favor developers or clients.
+
+Allow relevant project evidence to be reviewed.
+
+Do not promise guaranteed refunds.
+
+---
+
+# 21. PEER ARBITRATION — FUTURE FEATURE
+
+For a later marketplace stage, consider a peer-arbitration system.
+
+Potential features:
+
+- Qualified peer reviewers.
+- Conflict-of-interest checks.
+- Evidence review.
+- Arbitration records.
+- Appeals.
+
+Do not implement unrestricted arbitration by random users.
+
+This feature should remain disabled until TrustTech has appropriate moderation, legal guidance, and operational procedures.
+
+---
+
+# 22. DEVELOPER SANDBOXES — FUTURE FEATURE
+
+Phase 2 may include project sandboxes.
+
+Potential functionality:
+
+- Temporary project environments.
+- Demo previews.
+- Controlled testing.
+- Client review.
+- Project handover.
+
+Do not create insecure environments that expose secrets or allow unauthorized access to infrastructure.
+
+Sandbox access must be isolated and permission-controlled.
+
+Treat this as an advanced feature that may require separate infrastructure.
+
+---
+
+# 23. SLIDING FEES — FUTURE FEATURE
+
+Eventually, TrustTech may introduce sliding commission rates.
+
+Potential factors:
+
+- Developer experience.
+- Project value.
+- Developer performance.
+- Marketplace participation.
+- Subscription status, if introduced later.
+
+Do not implement arbitrary fee discrimination.
+
+Make fee calculations transparent.
+
+Administrators should be able to configure fee rules securely.
+
+---
+
+# 24. BYOC — FUTURE FEATURE
+
+Consider BYOC:
+
+**Bring Your Own Cloud.**
+
+This may allow developers or businesses to connect their own hosting infrastructure.
+
+Possible integrations:
+
+- GitHub.
+- Cloud hosting providers.
+- Deployment platforms.
+- External repositories.
+
+This must be optional and permission-controlled.
+
+Do not expose deployment credentials.
+
+Do not deploy projects without explicit authorization.
+
+Treat this as a future advanced feature.
+
+---
+
+# 25. SECURITY REQUIREMENTS
+
+Security is extremely important.
+
+Implement:
+
+- Firebase Authentication.
+- Firestore security rules.
+- Server-side authorization.
+- Input validation.
+- Output escaping.
+- Safe handling of user-generated content.
+- Protection against XSS.
+- Protection against unauthorized database access.
+- Protection against duplicate submissions.
+- Rate limiting where supported.
+- Secure API integration.
+- Safe file uploads.
+- Authentication checks on protected pages.
+- Admin authorization.
+- Payment webhook verification.
+- Firebase App Check where appropriate.
+
+SQL injection protection is not a substitute for Firestore security.
+
+If SQL databases are introduced later, use parameterized queries.
+
+Never trust user-provided role fields.
+
+Never trust frontend payment confirmations.
+
+Never expose secret keys.
+
+Do not use insecure shortcuts to make the application appear functional.
+
+---
+
+# 26. LEGAL AND TRUST PAGES
+
+Create pages for:
+
+- Terms of Service.
+- Privacy Policy.
+- Developer Guidelines.
+- Client Guidelines.
+- Payment Policy.
+- Refund Policy.
+- Dispute Policy.
+- Contact / Support.
+
+Use clear draft policies.
+
+Do not claim the platform has legal approval or regulatory certification.
+
+Payment, escrow, privacy, and marketplace policies should be reviewed before real commercial launch.
+
+---
+
+# 27. NOTIFICATIONS
+
+Build a notification system for:
+
+- Developer application approval.
+- Developer application rejection.
+- New project application.
+- Application shortlist.
+- Application acceptance.
+- Application rejection.
+- Project milestone updates.
+- Payment status updates.
+- Messages.
+- Disputes.
+
+Use in-app notifications first.
+
+Email notifications may be added through a properly configured service.
+
+Do not pretend emails have been sent if email integration is unavailable.
+
+---
+
+# 28. PROFILE AND ACCOUNT SETTINGS
+
+Users should be able to manage:
+
+- Name.
+- Profile image where supported.
+- Phone.
+- Optional WhatsApp.
+- Email.
+- Account preferences.
+- Notifications.
+- Password through Firebase Authentication.
+- Account status.
+
+Do not expose private information to other users unnecessarily.
+
+Do not allow users to change their UID.
+
+---
+
+# 29. RESPONSIVE DASHBOARD DESIGN
+
+Create dashboards that resemble real professional software.
+
+Developer dashboard:
+
+- Sidebar or responsive navigation.
+- Overview.
+- Projects.
+- Applications.
+- Messages.
+- Profile.
+- Settings.
+
+Business dashboard:
+
+- Overview.
+- My Projects.
+- Applications Received.
+- Active Hires.
+- Messages.
+- Payments.
+- Settings.
+
+Admin dashboard:
+
+- Overview.
+- Developers.
+- Businesses.
+- Projects.
+- Applications.
+- Reports.
+- Settings.
+
+Use realistic information architecture.
+
+Avoid dashboards consisting only of decorative statistic cards.
+
+Every visible button must have a meaningful action.
+
+---
+
+# 30. DATA QUALITY
+
+Do not fill the application with fake developers, fake businesses, fake projects, fake testimonials, or fake reviews.
+
+Use realistic empty states.
+
+For development testing, clearly identify seeded sample data as test data.
+
+Do not display test data as real marketplace activity.
+
+---
+
+# 31. IMPLEMENTATION REQUIREMENTS
+
+The project must be implemented as a working application.
+
+Do not only produce a design concept.
+
+Do not return incomplete placeholder code.
+
+Do not use:
+
+- Empty JavaScript handlers.
+- Buttons that do nothing.
+- Fake login systems.
+- Fake payment confirmations.
+- Fake approval systems.
+- Fake AI results.
+- Fake statistics.
+
+If something requires additional setup, clearly identify it.
+
+Use consistent naming.
+
+Maintain readable code.
+
+Add comments only where they genuinely help.
+
+Do not overcomplicate the application with unnecessary dependencies.
+
+---
+
+# 32. GOOGLE AI STUDIO WORKFLOW
+
+Because this project contains multiple pages and complex features, do not attempt to overwrite the entire application with one enormous unverified code dump.
+
+First inspect the existing project.
+
+Then:
+
+1. Produce a complete project audit.
+2. Identify existing functionality.
+3. Identify missing functionality.
+4. Identify security problems.
+5. Create a prioritized implementation plan.
+6. Preserve working Firebase authentication.
+7. Preserve developer verification.
+8. Update the branding to TrustTech.
+9. Build missing Phase 1 features.
+10. Prepare Phase 2 architecture.
+11. Implement features in manageable stages.
+12. Test every important workflow.
+
+When modifying existing files:
+
+- Return the complete updated file.
+- Do not return only fragments.
+- Preserve existing working functionality.
+- Explain exactly which files were changed.
+- Identify any required Firebase security-rule changes.
+- Identify any required Firebase Console setup.
+- Identify any required external API configuration.
+
+Do not silently remove existing features.
+
+If a feature cannot be completed in the current environment, explain why and provide the correct implementation plan.
+
+---
+
+# 33. REQUIRED FINAL RESULT
+
+The final application should be a complete, professional TrustTech marketplace with:
+
+- TrustTech branding.
+- Homepage.
+- Authentication.
+- Unified account system.
+- Developer verification.
+- Developer dashboard.
+- Business dashboard.
+- Project marketplace.
+- Project creation.
+- Developer applications.
+- Proposal credits.
+- Developer profiles.
+- AI proposal screening architecture.
+- Payment and milestone architecture.
+- Notifications.
+- Admin dashboard.
+- Security rules.
+- Responsive design.
+- Phase 2 expansion architecture.
+
+The application must be genuinely functional, not just visually impressive.
+
+Prioritize security, usability, maintainability, and trust.
+
+Build TrustTech as a serious technology marketplace that can begin in Nigeria and eventually serve international users.
+
+**Begin by auditing my existing project and explaining what already works, what needs improvement, and the safest order to implement the remaining features. Do not delete or replace working code without justification.**

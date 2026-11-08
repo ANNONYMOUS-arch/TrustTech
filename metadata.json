@@ -1,0 +1,6 @@
+{
+  "name": "TrustTech",
+  "description": "Trusted People. Better Technology. A curated marketplace connecting businesses with verified technology professionals across Nigeria and Africa.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
